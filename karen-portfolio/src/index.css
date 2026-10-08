@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-blush-50: #fff8f6;
+  --color-blush-100: #fdeef0;
+  --color-blush-200: #f6d6dc;
+  --color-blush-400: #e1a3b0;
+  --color-rose: #c9798a;
+  --color-rose-dark: #a85a6c;
+  --color-sage: #7f9a7c;
+  --color-sage-light: #e3ebe0;
+  --color-gold: #c39a6b;
+  --color-ink: #4a3a3f;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Great Vibes", cursive;
+  --font-sans: "Jost", system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-blush-50 text-ink font-sans antialiased; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+.section-kicker { @apply font-script text-rose text-3xl md:text-4xl; }
+.section-title { @apply font-display text-4xl md:text-5xl font-semibold text-ink; }
+@utility btn { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition; }
+@utility btn-rose { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition bg-rose text-white hover:bg-rose-dark shadow-lg shadow-rose/25; }
+@utility btn-ghost { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition border border-rose/40 text-rose hover:bg-blush-100; }
+
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+@utility input { @apply w-full rounded-xl border border-blush-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-rose focus:ring-2 focus:ring-rose/20; }
