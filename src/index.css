@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
+/* Fonts are self-hosted in public/fonts (latin, variable weight) and preloaded in index.html */
+@font-face { font-family: "Jost"; src: url("/fonts/jost.woff2") format("woff2"); font-weight: 300 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond.woff2") format("woff2"); font-weight: 500 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Great Vibes"; src: url("/fonts/great-vibes.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
 @theme {
   --color-blush-50: #fff8f6;
   --color-blush-100: #fdeef0;
   --color-blush-200: #f6d6dc;
   --color-blush-400: #e1a3b0;
   --color-rose: #c9798a;
-  --color-rose-dark: #a85a6c;
+  --color-rose-dark: #a85a6c; /* white text on this passes contrast (4.8:1); on --color-rose it doesn't (3.2:1) */
+  --color-rose-deep: #8f4a5b;
   --color-sage: #7f9a7c;
+  --color-sage-dark: #5b7558; /* sage for small text — readable on white and blush */
   --color-sage-light: #e3ebe0;
   --color-gold: #c39a6b;
   --color-ink: #4a3a3f;
@@ -22,11 +29,11 @@ body { @apply bg-blush-50 text-ink font-sans antialiased; }
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
-.section-kicker { @apply font-script text-rose text-3xl md:text-4xl; }
+.section-kicker { @apply font-script text-rose-dark text-3xl md:text-4xl; }
 .section-title { @apply font-display text-4xl md:text-5xl font-semibold text-ink; }
 @utility btn { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition; }
-@utility btn-rose { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition bg-rose text-white hover:bg-rose-dark shadow-lg shadow-rose/25; }
-@utility btn-ghost { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition border border-rose/40 text-rose hover:bg-blush-100; }
+@utility btn-rose { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition bg-rose-dark text-white hover:bg-rose-deep shadow-lg shadow-rose/25; }
+@utility btn-ghost { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition border border-rose/40 text-rose-dark hover:bg-blush-100; }
 
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
 @utility input { @apply w-full rounded-xl border border-blush-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-rose focus:ring-2 focus:ring-rose/20; }

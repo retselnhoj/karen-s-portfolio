@@ -31,8 +31,18 @@ npm run dev        # http://localhost:5173
 2. Netlify → Add new site → Import from GitHub → pick the repo (build settings come from `netlify.toml`).
 3. Site settings → Forms → enable form detection, then redeploy once.
 4. Leads appear under **Forms → leads**. Add an email notification there so Karen gets each lead in her inbox.
+5. If the site address ever changes, update `SITE_URL` in `src/data/site.js` and redeploy.
 
-5. In `index.html`, replace `https://YOUR-SITE.netlify.app` (2 places) with the real site URL so the Facebook link preview works, then redeploy.
+## SEO
+- **Site address:** `SITE_URL` in `src/data/site.js` — the only place it is written. The canonical link, Open Graph tags, JSON-LD, `sitemap.xml` and `robots.txt` are all filled from it at build time.
+- **Title, description, Open Graph tags:** `index.html`.
+- **Structured data (JSON-LD):** built in `scripts/seo.mjs` from `site.js` — a RealEstateAgent (Karen), a Place (Crescela Nuvali), the WebSite, and a FAQPage. Never add reviews, ratings or prices that aren't real. Add `geo` to the Place once you have exact coordinates.
+- **FAQ:** `faqs` in `site.js` — feeds both the FAQ section and the FAQPage structured data. Price and payment-term questions are left as commented TODOs for Karen.
+- **Sitemap and robots:** `scripts/gen-sitemap.mjs` writes `public/sitemap.xml` and `public/robots.txt` before every build, so `<lastmod>` is the build date.
+- **Pre-rendering:** `npm run build` also renders the page to HTML inside `dist/index.html` (`src/entry-server.jsx` + `scripts/prerender.mjs`), so search engines and link previews see real content without running JavaScript. The map, perspectives and elevation sections still load in the browser.
+- **Images:** add each new image's size to `imageSize` in `site.js`; keep files under ~400 KB (webp, ≤1800px wide). Karen's photo is `public/images/karen.webp`, with `karen.jpg` kept for the structured data.
+- **Fonts:** self-hosted in `public/fonts/`, declared in `src/index.css`, preloaded in `index.html`.
+- **After deploying:** check the live URL in Google's Rich Results Test and submit `sitemap.xml` in Google Search Console.
 
 ## Lead notifications
 Every inquiry is saved in Netlify under **Forms → leads**. To also email each one to Karen:

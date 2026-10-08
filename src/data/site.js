@@ -5,10 +5,15 @@
 
 const img = (name) => `/images/crescela/${name}.webp`
 
+// The live site address, no trailing slash. The ONLY place it is written: index.html
+// (canonical, Open Graph, JSON-LD), sitemap.xml and robots.txt are all filled from here at build time.
+export const SITE_URL = 'https://karen-besueno-portfolio.netlify.app'
+
 export const profile = {
   name: 'Karen',
   fullName: 'Karen Besueno',
   title: 'The Property Aligner',
+  subtitle: 'Residential lots in Crescela Nuvali · Santa Rosa, Laguna',
   location: 'Nuvali, Santa Rosa, Laguna',
   tagline: 'Aligning you with the perfect lot for your future home — in the heart of Nuvali.',
   email: 'karenb.avida@gmail.com',
@@ -17,8 +22,11 @@ export const profile = {
   phoneIntl: '639283246225',              // digits only, starts with 63, no "+" (wa.me and viber:// links)
   facebook: 'https://www.facebook.com/ThePropertyAligner',
   facebookHandle: 'The Property Aligner',
-  photo: '/images/karen.jpg',            // TODO: Karen's photo, e.g. '/images/karen.jpg'
+  photo: '/images/karen.webp',            // shown on the page (≤900px wide webp, made from karen.jpg)
+  photoJpg: '/images/karen.jpg',          // used in the structured data for search engines
   heroImage: img('aerial-mountain-view'),
+  // Phones get the 800px copy. If you change heroImage, make a matching "-800" copy or remove this line.
+  heroImageSrcSet: `${img('aerial-mountain-view-800')} 800w, ${img('aerial-mountain-view')} 1445w`,
 }
 
 // ── Featured / top selling property ──────────────────────────
@@ -26,6 +34,7 @@ export const featured = {
   name: 'Crescela Nuvali',
   developer: 'Avida Land · an Ayala Land company',
   tagline: 'Live and thrive in the highlands of Nuvali.',
+  description: 'Crescela Nuvali is a residential community by Avida Land inside Nuvali in Santa Rosa, Laguna, with lots for sale on gently rolling ground 199 to 225 metres above sea level. You buy the lot and build your own home on it when you are ready. Residents share a clubhouse, pools, a basketball court and open green spaces, with views of Laguna de Bay and Mt. Makiling.',
   type: 'Residential Lots',
   status: 'Now Selling',
   price: 'Ask for price list',          // TODO: e.g. 'Starts at ₱X.XM'
@@ -152,3 +161,66 @@ export const elevationPerks = [
 
 export const teaserImage = img('crescela-teaser')
 export const formImage = img('nuvali-sign')
+
+// ── FAQ ──────────────────────────────────────────────────────
+// Shown in the FAQ section and sent to Google as FAQPage structured data (plain text only).
+export const faqs = [
+  {
+    q: 'Where is Crescela Nuvali located?',
+    a: 'Crescela Nuvali is in the southern part of Nuvali in Santa Rosa, Laguna, beside Hillcrest Estates. Miriam College Nuvali, Everest Academy, Xavier School Nuvali and Ayala Malls Solenad are all within Nuvali.',
+  },
+  {
+    q: 'Are these lots only, or house and lot?',
+    a: "Lots only. Crescela Nuvali sells residential lots without houses, so you build your own home when you are ready. The homes in the pictures are artist's perspectives for illustration.",
+  },
+  {
+    q: 'What is the elevation of Crescela Nuvali?',
+    a: 'Crescela Nuvali sits about 199 to 225 metres above sea level. The highest blocks are in the south-west near the entrance, and the ground slopes gently down toward the north-east. See the Elevation Range section for the blocks in each band.',
+  },
+  {
+    q: 'What amenities does Crescela have?',
+    a: "A clubhouse, adult and kiddie pools, a basketball court, a kid's play area, jogging and walk paths, pocket parks and generous open spaces, with views of Laguna de Bay and Mt. Makiling.",
+  },
+  {
+    q: 'How do I check if a specific block and lot is available?',
+    a: `Lots are sold live, so this site does not show availability. Pick the block and lot on the site plan and send an inquiry, and ${profile.name} will confirm availability and price with you directly.`,
+  },
+  {
+    q: `How can I contact ${profile.name}?`,
+    a: `Message ${profile.fullName} on Viber or WhatsApp at ${profile.phone}, email ${profile.email}, or follow ${profile.facebookHandle} on Facebook. You can also leave your details in the inquiry form and she will reach out.`,
+  },
+  // TODO (Karen): add price and payment-term answers once you have confirmed figures, e.g.
+  // { q: 'How much are the lots in Crescela Nuvali?', a: 'TODO' },
+  // { q: 'What payment terms are available?', a: 'TODO' },
+]
+
+// ── Image sizes (width, height in px) ────────────────────────
+// Lets the browser reserve space before an image loads. Add a line when you add an image.
+const imageSize = {
+  '/images/karen.webp': [848, 1264],
+  [img('aerial-basketball-court')]: [1284, 2008],
+  [img('aerial-clubhouse')]: [1800, 1006],
+  [img('aerial-gate-entrance')]: [1800, 1006],
+  [img('aerial-masterplan')]: [1800, 1006],
+  [img('aerial-mountain-view')]: [1445, 795],
+  [img('aerial-roundabout')]: [1800, 1006],
+  [img('amenity-features')]: [1536, 1024],
+  [img('amphitheater-seating')]: [1536, 1024],
+  [img('clubhouse-pool')]: [1449, 799],
+  [img('crescela-teaser')]: [1800, 1083],
+  [img('dog-park')]: [1536, 1024],
+  [img('elevation-range')]: [1800, 1224],
+  [img('gate-entrance')]: [1800, 1006],
+  [img('gate-street-view')]: [1447, 802],
+  [img('gazebo-cabana')]: [1536, 1024],
+  [img('nuvali-sign')]: [1080, 1080],
+  [img('nuvali-vicinity-map')]: [1131, 1600],
+  [img('playground')]: [1800, 1006],
+  [img('pool-lounge')]: [1536, 1024],
+  [img('site-plan')]: [2048, 1365],
+}
+// Spread onto an <img>: <img src={src} {...dims(src)} />
+export const dims = (src) => {
+  const [width, height] = imageSize[src] || []
+  return { width, height }
+}

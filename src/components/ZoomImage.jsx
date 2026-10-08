@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { TransformWrapper, TransformComponent, KeepScale } from 'react-zoom-pan-pinch'
 import { ZoomIn, ZoomOut, RotateCcw, Maximize2, X } from 'lucide-react'
+import { dims } from '../data/site'
 
 // A marker placed at x/y (% of the image) that stays the same size on screen while zooming.
 // Render these as children of <ZoomImage>.
@@ -49,7 +50,7 @@ function Viewer({ src, alt, spots = [], active, setActive, tall, focus, fixedPin
           </div>
           <TransformComponent wrapperStyle={{ width: '100%', maxHeight: tall ? '85vh' : undefined }} contentStyle={{ width: '100%' }}>
             <div className="relative w-full">
-              <img src={src} alt={alt} className="block w-full select-none" draggable={false}
+              <img src={src} alt={alt} {...dims(src)} loading="lazy" decoding="async" className="block h-auto w-full select-none" draggable={false}
                 ref={(el) => { if (el?.complete) setLoaded(true) }} onLoad={() => setLoaded(true)} />
               {focus?.x != null && (
                 <div ref={box} aria-hidden className="pointer-events-none absolute"
@@ -83,7 +84,7 @@ export default function ZoomImage(props) {
         <button onClick={() => setFull(true)} className="absolute bottom-3 right-3 z-10 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1.5 text-xs shadow hover:text-rose">
           <Maximize2 size={14} /> Fullscreen
         </button>
-        <p className="pointer-events-none absolute bottom-3 left-3 z-10 rounded-full bg-white/80 px-3 py-1 text-[11px] text-ink/70">Pinch, scroll or double-tap to zoom</p>
+        <p className="pointer-events-none absolute bottom-3 left-3 z-10 rounded-full bg-white/80 px-3 py-1 text-[11px] text-ink/80">Pinch, scroll or double-tap to zoom</p>
       </div>
       {full && (
         <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-ink/90 p-4">

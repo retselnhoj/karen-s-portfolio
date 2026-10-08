@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Send, CheckCircle2, MessageCircle, Phone } from 'lucide-react'
-import { profile, formImage } from '../data/site'
+import { profile, formImage, dims } from '../data/site'
 import { whatsappLink, viberLink } from '../links'
 import { buildLeadMessage, GENERAL_INQUIRY } from '../lib/leadMessage'
 
@@ -52,20 +52,20 @@ export default function LeadForm({ interest, setInterest }) {
   }
 
   return (
-    <section id="inquire" className="mx-auto max-w-6xl px-4 py-24">
+    <section id="inquire" aria-labelledby="inquire-title" className="mx-auto max-w-6xl px-4 py-24">
       <div className="reveal overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-blush-200 via-blush-100 to-sage-light p-8 md:p-14">
         <div className="grid gap-10 md:grid-cols-2">
           <div>
             <p className="section-kicker">let's align</p>
-            <h2 className="section-title">Find the lot that fits you</h2>
+            <h2 id="inquire-title" className="section-title">Find the lot that fits you</h2>
             <p className="mt-4 max-w-sm font-light">Leave your details and {profile.name} will reach out personally on Viber or WhatsApp — no pressure, just guidance.</p>
-            <img src={formImage} alt="Nuvali" loading="lazy" className="mt-8 hidden aspect-[4/3] w-full max-w-sm rounded-3xl object-cover shadow-lg md:block" />
+            <img src={formImage} alt="Nuvali sign at the entrance to the eco-city in Santa Rosa, Laguna" {...dims(formImage)} loading="lazy" decoding="async" className="mt-8 hidden aspect-[4/3] w-full max-w-sm rounded-3xl object-cover shadow-lg md:block" />
           </div>
           {state === 'done' ? (
             <div className="grid place-items-center rounded-3xl bg-white/80 p-8 text-center md:p-10">
               <div>
-                <CheckCircle2 size={48} className="mx-auto text-sage" />
-                <p className="mt-4 font-display text-3xl">Thank you, {form.name.trim().split(' ')[0]}!</p>
+                <CheckCircle2 size={48} className="mx-auto text-sage-dark" />
+                <h3 className="mt-4 font-display text-3xl">Thank you, {form.name.trim().split(' ')[0]}!</h3>
                 <p className="mt-2 text-sm">{profile.name} will message you on {form.app === 'Both' ? 'Viber or WhatsApp' : form.app} soon.</p>
                 <p className="mt-6 text-sm font-medium">Want a faster reply? Send it directly:</p>
                 <DirectSend message={message} app={form.app} />
@@ -78,7 +78,7 @@ export default function LeadForm({ interest, setInterest }) {
               <Field label="Full name"><input required value={form.name} onChange={set('name')} className="input" placeholder="Juan Dela Cruz" /></Field>
               <Field label="Mobile number">
                 <div className="flex gap-2">
-                  <select value={form.app} onChange={set('app')} className="input !w-32">
+                  <select aria-label="Messaging app" value={form.app} onChange={set('app')} className="input !w-32">
                     <option>Viber</option><option>WhatsApp</option><option>Both</option>
                   </select>
                   <input required type="tel" pattern="[0-9+\s\-]{10,16}" value={form.number} onChange={set('number')} className="input" placeholder="0917 123 4567" />
@@ -89,7 +89,7 @@ export default function LeadForm({ interest, setInterest }) {
               {interest && (
                 <p className="flex items-center justify-between gap-3 rounded-xl bg-blush-100 px-4 py-2 text-sm">
                   <span>Interested in: <b>{interest}</b></span>
-                  <button type="button" onClick={() => setInterest('')} className="text-rose">clear</button>
+                  <button type="button" onClick={() => setInterest('')} className="text-rose-deep">clear</button>
                 </p>
               )}
               <button disabled={state === 'sending'} className="btn-rose w-full justify-center disabled:opacity-60">
@@ -141,5 +141,5 @@ function DirectSend({ message, app }) {
 }
 
 function Field({ label, children }) {
-  return <label className="block"><span className="mb-1 block text-xs uppercase tracking-widest text-ink/60">{label}</span>{children}</label>
+  return <label className="block"><span className="mb-1 block text-xs uppercase tracking-widest text-ink/80">{label}</span>{children}</label>
 }

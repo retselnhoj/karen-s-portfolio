@@ -25,16 +25,16 @@ export default function Elevations({ onInquire, onPickBlock }) {
   const band = sel === null ? null : elevationBands[sel]
   const pick = (idx) => { setSel(idx); setFocus(idx === null ? {} : bandBox(elevationBands[idx])) }
   return (
-    <section id="elevations" className="bg-sage-light/60 py-24">
+    <section id="elevations" aria-labelledby="elevations-title" className="bg-sage-light/60 py-24">
       <div className="mx-auto max-w-6xl px-4">
         <div className="reveal text-center">
           <p className="section-kicker">rise above</p>
-          <h2 className="section-title">Elevation Range</h2>
+          <h2 id="elevations-title" className="section-title">Elevation Range</h2>
           <p className="mx-auto mt-3 max-w-xl font-light">Crescela sits {featured.elevation} — tap a band to zoom to the blocks it covers.</p>
         </div>
         <div className="reveal mt-10 grid gap-8 lg:grid-cols-5">
           <div className="lg:col-span-3">
-            <ZoomImage src={elevationImage} alt="Crescela elevation range map" focus={focus}>
+            <ZoomImage src={elevationImage} alt="Crescela Nuvali elevation range map by block, in metres above sea level" focus={focus}>
               {band?.blocks.map((b) => (
                 <MapMarker key={b} {...elevationBlockSpots[b]}>
                   <button onClick={(e) => { e.stopPropagation(); onPickBlock(b) }} aria-label={`Block ${b} — open on the site plan`}
@@ -58,7 +58,7 @@ export default function Elevations({ onInquire, onPickBlock }) {
               ))}
             </div>
             <div className="mt-5 rounded-3xl bg-white p-6 shadow-sm">
-              <p className="text-xs uppercase tracking-widest text-sage">meters above sea level</p>
+              <p className="text-xs uppercase tracking-widest text-sage-dark">meters above sea level</p>
               {band ? (
                 <>
                   <h3 className="font-display text-3xl font-semibold">{band.range}</h3>
@@ -70,12 +70,12 @@ export default function Elevations({ onInquire, onPickBlock }) {
                           <button key={b} onClick={() => onPickBlock(b)} className="rounded-full bg-sage-light px-2.5 py-0.5 text-xs hover:bg-blush-100 hover:text-rose">Block {b}</button>
                         ))}
                       </div>
-                      <p className="mt-2 text-xs text-ink/60">Tap a block to open it on the site plan.</p>
+                      <p className="mt-2 text-xs text-ink/80">Tap a block to open it on the site plan.</p>
                     </>
                   )}
                   <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
                     <button onClick={() => onInquire(`${featured.name} – ${band.range} lots`)} className="btn-rose">Ask for lots at {band.range}</button>
-                    <button onClick={() => pick(null)} className="text-sm text-rose hover:underline">Show all</button>
+                    <button onClick={() => pick(null)} className="text-sm text-rose-dark hover:underline">Show all</button>
                   </div>
                 </>
               ) : (
@@ -84,7 +84,7 @@ export default function Elevations({ onInquire, onPickBlock }) {
                   <p className="mt-1 text-sm">Tap a band above to zoom the map to its blocks.</p>
                 </>
               )}
-              <p className="mt-3 text-[11px] text-ink/50">Blocks are approximate — final elevations per developer.</p>
+              <p className="mt-3 text-[11px] text-ink/80">Blocks are approximate — final elevations per developer.</p>
             </div>
           </div>
         </div>
@@ -93,8 +93,8 @@ export default function Elevations({ onInquire, onPickBlock }) {
             const I = icons[i % icons.length]
             return (
               <div key={p.title} className="reveal rounded-3xl bg-white p-6">
-                <I className="text-sage" />
-                <p className="mt-3 font-display text-2xl font-semibold">{p.title}</p>
+                <I className="text-sage-dark" />
+                <h3 className="mt-3 font-display text-2xl font-semibold">{p.title}</h3>
                 <p className="mt-1 text-sm">{p.text}</p>
               </div>
             )

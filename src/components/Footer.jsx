@@ -16,7 +16,7 @@ export default function Footer() {
           <a href={profile.facebook} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full border border-blush-100/30 px-4 py-2 hover:bg-white/10"><FacebookIcon size={15} />Facebook</a>
         </div>
         <p className="text-sm">{profile.phoneLabel}: {profile.phone}</p>
-        <p className="text-xs text-blush-100/50">© {new Date().getFullYear()} {profile.fullName}. Images are artist's perspectives and for illustration only.</p>
+        <p className="text-xs text-blush-100/75">© {new Date().getFullYear()} {profile.fullName}. Images are artist's perspectives and for illustration only.</p>
       </div>
     </footer>
   )
